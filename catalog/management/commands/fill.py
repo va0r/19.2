@@ -11,7 +11,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Список категорий для добавления
-        categories = [{'title': 'Овощи'}, {'title': 'Фрукты'}, {'title': 'Компьютеры'}, {'title': 'Бытовая техника'}]
+        categories = [
+            {'title': 'Овощи'},
+            {'title': 'Фрукты'},
+            {'title': 'Компьютеры'},
+            {'title': 'Бытовая техника'}
+        ]
 
         # Очистка таблицы Category
         Category.objects.all().delete()
@@ -25,11 +30,12 @@ class Command(BaseCommand):
         Category.objects.bulk_create(categories_for_create)
 
         # Список продуктов для добавления в БД
-        products = [{'title': 'Огурец', 'price': 5, 'category': categories_for_create[0]},  # Категория "овощи"
-                    {'title': 'Яблоко', 'price': 5, 'category': categories_for_create[1]},  # Категория "фрукты"
-                    {'title': 'Ноутбук', 'price': 5, 'category': categories_for_create[2]},
-                    # Категория "бытовая техника"
-                    {'title': 'Телевизор', 'price': 5, 'category': categories_for_create[3]}]  # Категория "компьютеры"
+        products = [
+            {'title': 'Огурец', 'price': 5, 'category': categories_for_create[0]},  # Категория "овощи"
+            {'title': 'Яблоко', 'price': 5, 'category': categories_for_create[1]},  # Категория "фрукты"
+            {'title': 'Ноутбук', 'price': 5, 'category': categories_for_create[2]},  # Категория "компьютеры"
+            {'title': 'Телевизор', 'price': 5, 'category': categories_for_create[3]}  # Категория "бытовая техника"
+        ]
 
         # Очистка таблицы Product
         Product.objects.all().delete()
