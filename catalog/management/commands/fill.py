@@ -1,4 +1,5 @@
 from django.core.management import BaseCommand
+from django.db import connection
 
 from catalog.models import Category, Product
 
@@ -40,6 +41,10 @@ class Command(BaseCommand):
         # Очистка таблицы Category
         Category.objects.all().delete()
 
+        # Сброс автоинкремента для поля `pk` в таблице Category
+        with connection.cursor() as cursor:
+            cursor.execute("ALTER SEQUENCE catalog_category_id_seq RESTART WITH 1")
+
         # Список экземпляров класса Category
         categories_for_create = []
         for category in categories:
@@ -73,6 +78,10 @@ class Command(BaseCommand):
 
         # Очистка таблицы Product
         Product.objects.all().delete()
+
+        # Сброс автоинкремента для поля `pk` в таблице Product
+        with connection.cursor() as cursor:
+            cursor.execute("ALTER SEQUENCE catalog_product_id_seq RESTART WITH 1")
 
         # Список экземпляров класса Product
         products_for_create = []
