@@ -1,0 +1,24 @@
+<div class="col-md-4">
+	<div class="card mb-4 box-shadow">
+		<img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+		<div class="card-body">
+			<p class="card-text">наименование: {{ object.title.upper }}</p>
+			<p class="card-text">описание: {{ object.description }}</p>
+			{% if flag %}
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="btn-group">
+						<a href="{% url 'catalog:categories' %}" type="button" class="btn btn-sm btn-outline-secondary">К категориям</a>
+						<a href="{% url 'catalog:category_products' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">К товарам</a>
+					</div>
+				</div>
+			{% else %}
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="btn-group">
+						<a href="{% url 'catalog:categories' %}" type="button" class="btn btn-sm btn-outline-secondary">К категориям</a>
+					</div>
+				</div>
+			{% endif %}
+
+		</div>
+	</div>
+</div>
