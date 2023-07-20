@@ -1,5 +1,3 @@
 # Project exclude paths
 /venv/
 .idea/
-db.sqlite3
-/media/raw/

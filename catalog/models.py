@@ -23,6 +23,7 @@ class Product(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=50, verbose_name='Название')
+    image = models.ImageField(upload_to='categories/', **NULLABLE, verbose_name='Изображение')
     description = models.TextField(**NULLABLE, verbose_name='Описание')
 
     def __str__(self):
