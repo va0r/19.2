@@ -1,6 +1,7 @@
+{% load my_tags %}
 <div class="col-md-4">
 	<div class="card mb-4 box-shadow">
-		<img class="card-img-top" src="/media/{{ object.image }}" alt="Card image cap">
+		<img class="card-img-top" src="{{ object.image|my_media }}" alt="Card image cap">
 		<div class="card-body">
 			<p class="card-text">наименование: {{ object.title.upper }}</p>
 			<p class="card-text">описание: {{ object.description }}</p>
