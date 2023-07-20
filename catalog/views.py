@@ -4,8 +4,11 @@ from catalog.models import Category, Product
 
 
 def index(request, *args, **kwargs):
+    index_content = Product.objects.all()
+    for each in index_content:
+        each.description = each.description[:100] + '...'
     context = {
-        'object_list': Product.objects.all(),
+        'object_list': index_content,
         'title': 'Каталог',
         'description': 'Приложение для работы с категориями и товарами',
         'flag': False
