@@ -1,55 +1,67 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from catalog.models import Category, Product
 
 
-def index(request, *args, **kwargs):
-    index_context = Product.objects.all()
-    for each in index_context:
-        each.description = each.description[:100] + '...'
-    context = {
-        'object_list': index_context,
+class IndexListView(ListView):
+    model = Product
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # TODO: ограничить передаваемый контекст 100 элементами.
+        for item in queryset.iterator():
+            item.description = item.description[:100] + '...'
+        return queryset
+
+    extra_context = {
         'title': 'Каталог',
         'description': 'Приложение для работы с категориями и товарами',
         'flag': False
     }
-    return render(request, 'catalog/index.html', context)
 
 
-def categories(request, *args, **kwargs):
-    context = {
-        'object_list': Category.objects.all(),
+class CategoryListView(ListView):
+    model = Category
+
+    extra_context = {
         'title': 'Каталог',
         'description': 'Список категорий',
         'flag': True
     }
-    return render(request, 'catalog/categories.html', context)
 
 
-def category_products(request, pk, *args, **kwargs):
-    category_item = Category.objects.get(pk=pk)
-    context = {
-        'object_list': Product.objects.filter(category_id=pk),
-        'title': 'Каталог',
-        'description': f'Список товаров категории {category_item.title}',
-        'flag': False
-    }
-    return render(request, 'catalog/products.html', context)
+class CategoryProductListView(ListView):
+    model = Product
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        category_item = Category.objects.get(pk=self.kwargs.get('pk'))
+        context_data['title'] = 'Каталог'
+        context_data['description'] = f'Список товаров категории {category_item.title}'
+        context_data['flag'] = False
+        return context_data
 
 
-def products(request, *args, **kwargs):
-    context = {
-        'object_list': Product.objects.all(),
+class ProductListView(ListView):
+    model = Product
+
+    extra_context = {
         'title': 'Каталог',
         'description': 'Список товаров',
         'flag': False
     }
-    return render(request, 'catalog/products.html', context)
 
 
 def contacts(request, *args, **kwargs):
+
     context = {
         'title': 'Каталог',
         'description': 'Контакты'
     }
-    return render(request, 'catalog/contacts.html', context)
+    return render(request, 'catalog/contact_list.html', context)
