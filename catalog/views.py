@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from django.views.generic import ListView
 
-from catalog.models import Category, Product
+from catalog.models import Category, Product, Contact
 
 
 class IndexListView(ListView):
@@ -10,8 +9,8 @@ class IndexListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         # TODO: ограничить передаваемый контекст 100 элементами.
-        for item in queryset.iterator():
-            item.description = item.description[:100] + '...'
+        # for item in queryset.iterator():
+        #     item.description = item.description[:100] + '...'
         return queryset
 
     extra_context = {
@@ -58,10 +57,10 @@ class ProductListView(ListView):
     }
 
 
-def contacts(request, *args, **kwargs):
+class ContactListView(ListView):
+    model = Contact
 
-    context = {
+    extra_context = {
         'title': 'Каталог',
         'description': 'Контакты'
     }
-    return render(request, 'catalog/contact_list.html', context)
