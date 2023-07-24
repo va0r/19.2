@@ -6,17 +6,10 @@ from catalog.models import Category, Product, Contact
 class IndexListView(ListView):
     model = Product
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        # TODO: ограничить передаваемый контекст 100 элементами.
-        # for item in queryset.iterator():
-        #     item.description = item.description[:100] + '...'
-        return queryset
-
     extra_context = {
         'title': 'Каталог',
         'description': 'Приложение для работы с категориями и товарами',
-        'flag': False
+        'cropped': True
     }
 
 
@@ -26,7 +19,7 @@ class CategoryListView(ListView):
     extra_context = {
         'title': 'Каталог',
         'description': 'Список категорий',
-        'flag': True
+        'is_product': True
     }
 
 
@@ -43,7 +36,6 @@ class CategoryProductListView(ListView):
         category_item = Category.objects.get(pk=self.kwargs.get('pk'))
         context_data['title'] = 'Каталог'
         context_data['description'] = f'Список товаров категории {category_item.title}'
-        context_data['flag'] = False
         return context_data
 
 
@@ -53,7 +45,6 @@ class ProductListView(ListView):
     extra_context = {
         'title': 'Каталог',
         'description': 'Список товаров',
-        'flag': False
     }
 
 
