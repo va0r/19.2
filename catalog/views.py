@@ -55,3 +55,5 @@ class ContactListView(ListView):
         'title': 'Каталог',
         'description': 'Контакты'
     }
+
+
