@@ -7,4 +7,4 @@ register = template.Library()
 def my_media(value):
     if value:
         return f'/media/{value}'
-    return '/media/blank/blank.jpg'
+    return '/media/blank/aboutblank.jpg'
