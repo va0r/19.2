@@ -1,0 +1,14 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+	<div class="col-12 mb-5">
+		<a class="btn btn-outline-dark" href="{% url 'blog:CREATE' %}">Create</a>
+	</div>
+	<div class="row">
+		{% for object in object_list %}
+			{% include 'blog/includes/card.html' %}
+		{% endfor %}
+	</div>
+
+{% endblock %}

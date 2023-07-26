@@ -18,7 +18,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
-        ordering = ['pk',]
+        ordering = ['pk']
 
 
 class Category(models.Model):
@@ -32,5 +32,19 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        ordering = ['pk',]
+        ordering = ['pk']
 
+
+class Contact(models.Model):
+
+    key = models.CharField(max_length=25, verbose_name='Ключ')
+    image = models.ImageField(upload_to='contacts/', **NULLABLE, verbose_name='')
+    value = models.CharField(max_length=100, verbose_name='Значение')
+
+    def __str__(self):
+        return f'{self.key}: {self.value}'
+
+    class Meta:
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
+        ordering = ['pk']
