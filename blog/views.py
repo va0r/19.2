@@ -8,7 +8,7 @@ from blog.models import Note
 class NoteCreateView(CreateView):
     model = Note
     fields = ('title', 'content', 'image', 'is_published')
-    success_url = reverse_lazy('READ-all')
+    success_url = reverse_lazy('blog:READ_all')
 
     extra_context = {
         'title': 'Блог',
@@ -73,8 +73,8 @@ class NoteUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('READ-one', args=[self.kwargs.get('pk')])
+        return reverse('blog:READ_one', args=[self.kwargs.get('pk')])
 
 class NoteDeleteView(DeleteView):
     model = Note
-    success_url = reverse_lazy('READ-all')
+    success_url = reverse_lazy('blog:READ_all')
