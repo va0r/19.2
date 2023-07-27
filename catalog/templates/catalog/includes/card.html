@@ -13,14 +13,15 @@
 			{% if is_product %}
 				<div class="d-flex justify-content-between align-items-center">
 					<div class="btn-group">
-						<a href="{% url 'catalog:categories' %}" type="button" class="btn btn-sm btn-outline-secondary">К категориям</a>
-						<a href="{% url 'catalog:category_products' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">К товарам</a>
+						<a href="{% url 'catalog:categories' %}" type="button" class="btn btn-sm btn-outline-secondary">Категории</a>
+						<a href="{% url 'catalog:category_products' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Товары</a>
 					</div>
 				</div>
 			{% else %}
 				<div class="d-flex justify-content-between align-items-center">
 					<div class="btn-group">
-						<a href="{% url 'catalog:categories' %}" type="button" class="btn btn-sm btn-outline-secondary">К категориям</a>
+						<a href="{% url 'catalog:categories' %}" type="button" class="btn btn-sm btn-outline-secondary">Категории</a>
+						<a href="{% url 'catalog:update_product' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Изменить</a>
 					</div>
 				</div>
 			{% endif %}

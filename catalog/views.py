@@ -1,5 +1,8 @@
-from django.views.generic import ListView
+from django.contrib.messages import success
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView
 
+from catalog.forms import ProductForm
 from catalog.models import Category, Product, Contact
 
 
@@ -56,4 +59,25 @@ class ContactListView(ListView):
         'description': 'Контакты'
     }
 
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:products')
+
+    extra_context = {
+        'title': 'Каталог',
+        'description': 'Добавление товара'
+    }
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:products')
+
+    extra_context = {
+        'title': 'Каталог',
+        'description': 'Изменение товара'
+    }
 
