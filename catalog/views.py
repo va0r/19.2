@@ -80,4 +80,3 @@ class ProductUpdateView(UpdateView):
         'title': 'Каталог',
         'description': 'Изменение товара'
     }
-

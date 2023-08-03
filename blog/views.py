@@ -75,6 +75,7 @@ class NoteUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('blog:READ_one', args=[self.kwargs.get('pk')])
 
+
 class NoteDeleteView(DeleteView):
     model = Note
     success_url = reverse_lazy('blog:READ_all')
