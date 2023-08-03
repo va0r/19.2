@@ -17,8 +17,8 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        # fields = '__all__'
-        exclude = ('created_at', 'modified_at',)
+        fields = '__all__'
+
 
     def __check(self, field):
         PROHIBITED_WORDS = ('бесплатно', 'биржа', 'дешево', 'казино', 'крипта',
@@ -31,7 +31,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         return cleaned_data
 
     def clean_title(self):
-        self.__check('title')
+        return self.__check('title')
 
     def clean_description(self):
-        self.__check('description')
+        return self.__check('description')

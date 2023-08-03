@@ -58,7 +58,6 @@ class NoteDetailView(DetailView):
 class NoteUpdateView(UpdateView):
     model = Note
     fields = ('title', 'content', 'image', 'is_published')
-    # success_url = reverse_lazy('blog:READ all')
 
     extra_context = {
         'title': 'Блог',
