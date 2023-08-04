@@ -19,7 +19,6 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         model = Product
         fields = '__all__'
 
-
     def __check(self, field):
         PROHIBITED_WORDS = ('бесплатно', 'биржа', 'дешево', 'казино', 'крипта',
                             'криптовалюта', 'обман', 'полиция', 'радар')
