@@ -3,10 +3,12 @@ if __name__ == '__main__':
 
     try:
         os.system('python3 manage.py makemigrations')
+        print('MAKEMIGRATIONS done')
     except OSError:
         f'{OSError=}'
 
     try:
         os.system('python3 manage.py migrate')
+        print('MIGRATE done')
     except OSError:
         f'{OSError=}'
