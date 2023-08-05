@@ -67,5 +67,5 @@ class Version(models.Model):
         constraints = [
             UniqueConstraint(fields=['is_active'],
                              condition=Q(is_active=True),
-                             name='unique_is_active')
+                             name='У продукта может быть только одна активная версия!')
         ]
