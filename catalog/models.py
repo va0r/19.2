@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint, Q
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -13,7 +14,7 @@ class Product(models.Model):
     modified_at = models.DateTimeField(auto_now=True, verbose_name='Изменено')
 
     def __str__(self):
-        return f'{self.title} {self.price}'
+        return f'{self.title} (цена: {self.price})'
 
     class Meta:
         verbose_name = 'Продукт'
@@ -36,7 +37,6 @@ class Category(models.Model):
 
 
 class Contact(models.Model):
-
     key = models.CharField(max_length=25, verbose_name='Ключ')
     image = models.ImageField(upload_to='contacts/', **NULLABLE, verbose_name='')
     value = models.CharField(max_length=100, verbose_name='Значение')
@@ -48,3 +48,24 @@ class Contact(models.Model):
         verbose_name = 'Контакт'
         verbose_name_plural = 'Контакты'
         ordering = ['pk']
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Название товара')
+    number = models.SmallIntegerField(default=1, unique=True, verbose_name='Номер версии')
+    title = models.CharField(max_length=255, **NULLABLE, verbose_name='Название версии')
+    description = models.TextField(**NULLABLE, verbose_name='Описание текущей версии')
+    is_active = models.BooleanField(default=False, verbose_name='Признак текущей версии')
+
+    def __str__(self):
+        return f'Версия {self.number} ({self.product})'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+        ordering = ('number',)
+        constraints = [
+            UniqueConstraint(fields=['is_active'],
+                             condition=Q(is_active=True),
+                             name='unique_is_active')
+        ]

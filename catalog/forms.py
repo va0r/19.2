@@ -1,6 +1,6 @@
 from django import forms
 
-from catalog.models import Product
+from catalog.models import Product, Version
 
 
 class StyleFormMixin:
@@ -34,3 +34,13 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
 
     def clean_description(self):
         return self.__check('description')
+
+
+class VersionForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Version
+        fields = '__all__'
+
+    def clean_is_active(self):
+        # TODO: сделать проверку уникальности текущей версии
+        pass
