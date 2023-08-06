@@ -41,6 +41,6 @@ class VersionForm(StyleFormMixin, forms.ModelForm):
         model = Version
         fields = '__all__'
 
-    def clean_is_active(self):
+    # def clean_is_active(self):
         # TODO: сделать проверку уникальности текущей версии
-        pass
+        # pass
