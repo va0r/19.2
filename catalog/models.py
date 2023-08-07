@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import UniqueConstraint, Q
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -55,7 +54,7 @@ class Version(models.Model):
     number = models.SmallIntegerField(verbose_name='Номер версии')
     title = models.CharField(max_length=255, **NULLABLE, verbose_name='Название версии')
     description = models.TextField(**NULLABLE, verbose_name='Описание версии')
-    is_active = models.BooleanField(verbose_name='Признак активной версии')
+    is_active_version = models.BooleanField(verbose_name='Признак активной версии')
 
     def __str__(self):
         return f'Версия {self.number} ({self.product})'

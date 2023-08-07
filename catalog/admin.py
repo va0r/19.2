@@ -23,5 +23,5 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'product', 'number', 'is_active')
+    list_display = ('pk', 'product', 'number', 'is_active_version')
     search_fields = ('title', 'product')

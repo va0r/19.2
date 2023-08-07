@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import BaseInlineFormSet
 
 from catalog.models import Product, Version
 
@@ -39,8 +40,16 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
 class VersionForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Version
-        fields = '__all__'
+        # fields = '__all__'
+        fields = ('number', 'title', 'is_active_version')
 
-    # def clean_is_active(self):
-        # TODO: сделать проверку уникальности текущей версии
-        # pass
+
+class VersionFormSet(BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+        cnt_active_version = 0
+        for form in self.forms:
+            if form['is_active_version'].data:
+                cnt_active_version += 1
+        if cnt_active_version > 1:
+            raise forms.ValidationError('Только одна версия может быть активной!')
