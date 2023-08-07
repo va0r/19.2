@@ -64,9 +64,9 @@ class Version(models.Model):
         verbose_name = 'версия'
         verbose_name_plural = 'версии'
         ordering = ('number',)
-
-        constraints = [
-            UniqueConstraint(fields=['is_active'],
-                             condition=Q(is_active=True),
-                             name='is_active_True')
-        ]
+        #
+        # constraints = [
+        #     UniqueConstraint(fields=['is_active'],
+        #                      condition=Q(is_active=True),
+        #                      name='is_active_True')
+        # ]
