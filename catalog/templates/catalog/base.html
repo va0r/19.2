@@ -1,58 +1,59 @@
 {% load static %}
-<!doctype html>
+<!--<!doctype html>-->
+{{ '<' }}{{ '!DOCTYPE html>' }}
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Skypro Python Developer 3.0 Course, module 6: Django">
-	<meta name="author" content="Viktor A Orlov">
-	<link rel="icon" href="{% static 'img/favicon.ico' %}">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="Skypro Python Developer 3.0 Course, module 6: Django" name="description">
+    <meta content="Viktor A Orlov" name="author">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
 
-	<title>{{ title }} -- {{ description }}</title>
+    <title>{{ title }} -- {{ description }}</title>
 
-	<link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+    <link href="https://getbootstrap.com/docs/4.0/examples/album/" rel="canonical">
 
-	<!-- Bootstrap core CSS -->
-	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-	<!-- Custom styles for this template -->
-	<link href="{% static 'css/album.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/album.css' %}" rel="stylesheet">
 </head>
 
 <body>
 
 <header>
-	{% include 'catalog/includes/navbar.html' %}
+    {% include 'catalog/includes/navbar.html' %}
 </header>
 
 <main role="main">
 
-	<section class="jumbotron text-center">
-		<div class="container">
-			<h1 class="jumbotron-heading">{{ title }}</h1>
-			<p class="lead text-muted">{{ description }}</p>
-		</div>
-	</section>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ title }}</h1>
+            <p class="lead text-muted">{{ description }}</p>
+        </div>
+    </section>
 
-	<div class="album py-5 bg-light">
-		<div class="container">
-			{% block content %}
-			{% endblock %}
-		</div>
-	</div>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
 
 </main>
 
 <footer class="text-muted">
-	{% include 'catalog/includes/footer.html' %}
+    {% include 'catalog/includes/footer.html' %}
 </footer>
 
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 
 <script src="{% static 'js/popper.min.js' %}"></script>

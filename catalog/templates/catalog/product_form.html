@@ -1,0 +1,51 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+	<form enctype="multipart/form-data" method="post" class="row">
+		<div class="col-6">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title" align="center">
+						{% if object %}
+							Изменение товара <<{{ object.title }}>>
+						{% else %}
+							Добавление товара
+						{% endif %}
+					</h3>
+				</div>
+				<div class="card-body">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<button class="btn btn-success" type="submit">Сохранить</button>
+				</div>
+				<div class="card-footer">
+					<a class="btn btn-sm btn-outline-secondary" href="javascript:history.back()"
+					   type="button">Вернуться</a>
+				</div>
+			</div>
+		</div>
+		{% if object %}
+			<div class="col-6">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title" align="center">Версии товара</h3>
+					</div>
+					<div class="card-body">
+						{{ formset.management_form }}
+						{% for form in formset.forms %}
+							{{ form.as_p }}
+							{% if not forloop.last %}
+								<hr color="black">
+								<hr color="black">
+							{% endif %}
+						{% endfor %}
+					</div>
+					<div class="card-footer">
+						<a class="btn btn-sm btn-outline-secondary" href="javascript:history.back()" type="button">Вернуться</a>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</form>
+
+{% endblock %}

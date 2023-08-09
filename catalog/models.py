@@ -9,11 +9,11 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', **NULLABLE, verbose_name='Изображение')
     category = models.ForeignKey('catalog.Category', on_delete=models.SET_NULL, null=True, verbose_name='Категория')
     price = models.IntegerField(verbose_name='Цена')
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
+    modified_at = models.DateTimeField(auto_now=True, verbose_name='Изменено')
 
     def __str__(self):
-        return f'{self.title} {self.price}'
+        return f'{self.title} (цена: {self.price})'
 
     class Meta:
         verbose_name = 'Продукт'
@@ -36,7 +36,6 @@ class Category(models.Model):
 
 
 class Contact(models.Model):
-
     key = models.CharField(max_length=25, verbose_name='Ключ')
     image = models.ImageField(upload_to='contacts/', **NULLABLE, verbose_name='')
     value = models.CharField(max_length=100, verbose_name='Значение')
@@ -48,3 +47,25 @@ class Contact(models.Model):
         verbose_name = 'Контакт'
         verbose_name_plural = 'Контакты'
         ordering = ['pk']
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Название товара')
+    number = models.SmallIntegerField(verbose_name='Номер версии')
+    title = models.CharField(max_length=255, **NULLABLE, verbose_name='Название версии')
+    description = models.TextField(**NULLABLE, verbose_name='Описание версии')
+    is_active_version = models.BooleanField(verbose_name='Признак активной версии')
+
+    def __str__(self):
+        return f'Версия {self.number} ({self.product})'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+        ordering = ('number',)
+        #
+        # constraints = [
+        #     UniqueConstraint(fields=['is_active'],
+        #                      condition=Q(is_active=True),
+        #                      name='is_active_True')
+        # ]
