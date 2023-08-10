@@ -44,7 +44,7 @@ class VersionForm(StyleFormMixin, forms.ModelForm):
         fields = ('number', 'title', 'is_active_version')
 
 
-class VersionFormSet(BaseInlineFormSet):
+class VersionFormSet(StyleFormMixin, BaseInlineFormSet):
     def clean(self):
         super().clean()
         cnt_active_version = 0
