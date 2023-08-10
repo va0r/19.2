@@ -6,9 +6,11 @@ from catalog.models import NULLABLE
 
 class User(AbstractUser):
 
+    username = None
+    email = models.EmailField(unique=True, verbose_name='Электронная почта')
     avatar = models.ImageField(upload_to='users/', verbose_name='Аватар', **NULLABLE)
-    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    phone = models.CharField(max_length=20, verbose_name='Телефон', **NULLABLE)
     country = models.CharField(max_length=120, verbose_name='Страна', **NULLABLE)
 
-
-    # TODO  https://my.sky.pro/student-cabinet/stream-lesson/84551/theory/5 03:52
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
