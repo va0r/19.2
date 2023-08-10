@@ -12,3 +12,9 @@ if __name__ == '__main__':
         print('CATALOG loaded')
     except OSError:
         f'{OSError=}'
+
+    try:
+        os.system('python3 manage.py loaddata users_data.json')
+        print('USERS loaded')
+    except OSError:
+        f'{OSError=}'
