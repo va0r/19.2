@@ -1,7 +1,8 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
@@ -70,4 +71,14 @@ def generate_new_password(request):
         recipient_list=[request.user.email]
     )
 
+    del new_password
+
     return redirect(reverse('users:login'))
+
+
+def activate_new_user(request, pk):
+    user = get_user_model()
+    user_for_activate = user.objects.get(id=pk)
+    user_for_activate.is_active = True
+    user_for_activate.save()
+    return render(request, 'users/activate_user.html')
