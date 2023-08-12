@@ -17,7 +17,7 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('seller',)
 
     def __check(self, field):
         PROHIBITED_WORDS = ('бесплатно', 'биржа', 'дешево', 'казино', 'крипта',
