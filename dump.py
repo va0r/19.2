@@ -12,3 +12,9 @@ if __name__ == '__main__':
         print('CATALOG dumped')
     except OSError:
         f'{OSError=}'
+
+    try:
+        os.system('python3 manage.py dumpdata users > users_data.json')
+        print('USERS dumped')
+    except OSError:
+        f'{OSError=}'

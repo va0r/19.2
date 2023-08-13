@@ -10,6 +10,7 @@
             <p class="card-text">описание: {{ object.description }}</p>
             {% endif %}
             <p class="card-text">цена: {{ object.price }}</p>
+            <p class="card-text">продавец: {{ object.seller|default:"магазин" }}</p>
             {% if is_product %}
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
@@ -19,13 +20,15 @@
                 </div>
             </div>
             {% else %}
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:categories' %}" type="button">Категории</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:update_product' object.pk %}"
-                       type="button">Изменить</a>
-                </div>
-            </div>
+	            <div class="d-flex justify-content-between align-items-center">
+		            <div class="btn-group">
+			            <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:categories' %}" type="button">Категории</a>
+			            {% if user.is_authenticated %}
+				            <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:update_product' object.pk %}"
+				               type="button">Изменить</a>
+			            {% endif %}
+		            </div>
+	            </div>
             {% endif %}
 
         </div>
