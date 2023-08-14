@@ -15,6 +15,8 @@ class Product(models.Model):
 
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Продавец')
 
+    is_published = models.BooleanField(default=False, verbose_name='Опубликовано')
+
     def __str__(self):
         return f'{self.title} (цена: {self.price})'
 
@@ -66,9 +68,3 @@ class Version(models.Model):
         verbose_name = 'версия'
         verbose_name_plural = 'версии'
         ordering = ('number',)
-        #
-        # constraints = [
-        #     UniqueConstraint(fields=['is_active'],
-        #                      condition=Q(is_active=True),
-        #                      name='is_active_True')
-        # ]
