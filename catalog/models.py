@@ -24,6 +24,10 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
         ordering = ['pk']
+        permissions = (('сan_change_description', 'can change description'),
+                       ('сan_change_category', 'can change category'),
+                       ('сan_change_is_published', 'can change is_published'),
+                       ('сan_view_price', 'can view price'))
 
 
 class Category(models.Model):
