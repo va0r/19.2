@@ -6,7 +6,15 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Contact, Version
 
 
-class IndexListView(ListView):
+class IsPublishedMixin:
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
+
+class IndexListView(IsPublishedMixin, ListView):
     model = Product
 
     extra_context = {
@@ -26,7 +34,7 @@ class CategoryListView(ListView):
     }
 
 
-class CategoryProductListView(ListView):
+class CategoryProductListView(IsPublishedMixin, ListView):
     model = Product
 
     def get_queryset(self):
@@ -42,7 +50,7 @@ class CategoryProductListView(ListView):
         return context_data
 
 
-class ProductListView(ListView):
+class ProductListView(IsPublishedMixin, ListView):
     model = Product
 
     extra_context = {
@@ -69,7 +77,7 @@ class ProductCreateView(CreateView):
         'title': 'Каталог',
         'description': 'Добавление товара'
     }
-    
+
     def form_valid(self, form):
         self.object = form.save()
         self.object.seller = self.request.user
