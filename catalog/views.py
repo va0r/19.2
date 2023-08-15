@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
@@ -14,7 +15,7 @@ class IsPublishedMixin:
         return queryset
 
 
-class IndexListView(IsPublishedMixin, ListView):
+class IndexListView(LoginRequiredMixin, IsPublishedMixin, ListView):
     model = Product
 
     extra_context = {
@@ -24,7 +25,7 @@ class IndexListView(IsPublishedMixin, ListView):
     }
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
 
     extra_context = {
@@ -34,7 +35,7 @@ class CategoryListView(ListView):
     }
 
 
-class CategoryProductListView(IsPublishedMixin, ListView):
+class CategoryProductListView(LoginRequiredMixin, IsPublishedMixin, ListView):
     model = Product
 
     def get_queryset(self):
@@ -50,7 +51,7 @@ class CategoryProductListView(IsPublishedMixin, ListView):
         return context_data
 
 
-class ProductListView(IsPublishedMixin, ListView):
+class ProductListView(LoginRequiredMixin, IsPublishedMixin, ListView):
     model = Product
 
     extra_context = {
@@ -68,7 +69,7 @@ class ContactListView(ListView):
     }
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products')
@@ -85,7 +86,7 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products')
