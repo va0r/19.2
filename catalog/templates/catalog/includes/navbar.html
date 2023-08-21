@@ -15,7 +15,7 @@
 					<li><a class="text-white" href="{% url 'catalog:contacts' %}">Контакты</a></li>
 					<br>
 					{% if user.is_authenticated %}
-						<li><a class="text-white" href="{% url 'users:profile' %}">Профиль</a></li>
+						<li><a class="text-white" href="{% url 'users:profile' %}">Профиль {{ user }}</a></li>
 						<li><a class="text-white" href="{% url 'users:logout' %}">Выйти</a></li>
 					{% else %}
 						<li><a class="text-white" href="{% url 'users:register' %}">Регистрация</a></li>

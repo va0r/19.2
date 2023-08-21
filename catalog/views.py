@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 
@@ -95,6 +96,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         'title': 'Каталог',
         'description': 'Изменение товара'
     }
+
+    permission_required = 'catalog.сan_change_description'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.seller != self.request.user and not self.request.user.is_staff:
+            print(f'{Exception = }')
+            raise Http404
+        return self.object
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
