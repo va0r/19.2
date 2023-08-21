@@ -102,7 +102,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         if self.object.seller != self.request.user and not self.request.user.is_staff:
-            print(f'{Exception = }')
             raise Http404
         return self.object
 
