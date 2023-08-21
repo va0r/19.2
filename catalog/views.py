@@ -1,4 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 
@@ -6,7 +8,15 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Contact, Version
 
 
-class IndexListView(ListView):
+class IsPublishedMixin:
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
+
+class IndexListView(LoginRequiredMixin, IsPublishedMixin, ListView):
     model = Product
 
     extra_context = {
@@ -16,7 +26,7 @@ class IndexListView(ListView):
     }
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
 
     extra_context = {
@@ -26,7 +36,7 @@ class CategoryListView(ListView):
     }
 
 
-class CategoryProductListView(ListView):
+class CategoryProductListView(LoginRequiredMixin, IsPublishedMixin, ListView):
     model = Product
 
     def get_queryset(self):
@@ -42,7 +52,7 @@ class CategoryProductListView(ListView):
         return context_data
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, IsPublishedMixin, ListView):
     model = Product
 
     extra_context = {
@@ -60,7 +70,7 @@ class ContactListView(ListView):
     }
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products')
@@ -69,7 +79,7 @@ class ProductCreateView(CreateView):
         'title': 'Каталог',
         'description': 'Добавление товара'
     }
-    
+
     def form_valid(self, form):
         self.object = form.save()
         self.object.seller = self.request.user
@@ -77,7 +87,7 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products')
@@ -86,6 +96,14 @@ class ProductUpdateView(UpdateView):
         'title': 'Каталог',
         'description': 'Изменение товара'
     }
+
+    permission_required = 'catalog.сan_change_description'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.seller != self.request.user and not self.request.user.is_staff:
+            raise Http404
+        return self.object
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)

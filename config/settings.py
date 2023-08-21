@@ -128,17 +128,30 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# MEDIA URL & ROOT
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Убираем warnings двойного использования templatetags
 SILENCED_SYSTEM_CHECKS = ["templates.E003"]
 
+# Модель аутентификации пользователя и редиректы
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users/'
 
+# Данные для отправки писем
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'en.saio@yandex.ru'
 EMAIL_HOST_PASSWORD = 'bffpjmdrkddvcrya'  # пароль приложения
 EMAIL_USE_SSL = True
+
+# Кеш
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}

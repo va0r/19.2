@@ -23,7 +23,7 @@
 	            <div class="d-flex justify-content-between align-items-center">
 		            <div class="btn-group">
 			            <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:categories' %}" type="button">Категории</a>
-			            {% if user.is_authenticated %}
+			            {% if object.seller == request.user or request.user.is_staff %}
 				            <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:update_product' object.pk %}"
 				               type="button">Изменить</a>
 			            {% endif %}
