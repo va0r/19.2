@@ -5,3 +5,5 @@
 __pycache__
 /security/
 /.env
+*.yml
+*.rdb
