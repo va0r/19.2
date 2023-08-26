@@ -4,3 +4,6 @@
 *.xml
 __pycache__
 /security/
+/.env
+*.yml
+*.rdb

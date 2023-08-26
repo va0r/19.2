@@ -1,11 +1,13 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.http import Http404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Contact, Version
+from catalog.services import get_cached_categories
 
 
 class IsPublishedMixin:
@@ -123,3 +125,22 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
+
+class ProductDetailView(LoginRequiredMixin, DetailView):
+    model = Product
+
+    extra_context = {
+        'title': 'Каталог',
+        'description': 'Просмотр карточки товара',
+        'card': True
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if settings.CACHE_ENABLED:
+            categories = get_cached_categories()
+        else:
+            categories = Category.objects.all()
+        context['categories'] = categories
+        return context
